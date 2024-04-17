@@ -1,0 +1,93 @@
+<div class="flex justify-center my-8 bg-blue-100">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()"
+        class="w-full lg:w-1/2 p-4 bg-neutral-100 shadow-md rounded-md grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+        <!-- Columna 1 -->
+        <div class="lg:flex lg:flex-col lg:space-y-4">
+            <!-- Reference -->
+            <div>
+                <label for="reference" class="block mb-2 text-sm font-medium text-gray-700">Reference:</label>
+                
+                <input type="text" id="reference" formControlName="reference"
+                    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-red-200"
+                    [(ngModel)]="product.reference">
+                <p *ngIf="f.reference.invalid && (f.reference.untouched || f.reference.touched)"
+                    class="alert text-red-500">* Reference must be
+                    3 characters + 9 numbers </p>
+            </div>
+
+            <!-- Name -->
+            <div>
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-700">Name:</label>
+                <input type="text" id="name" formControlName="name"
+                    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-red-200"
+                    [(ngModel)]="product.name">
+                <p *ngIf="f.name.invalid && (f.name.value && f.name.value.length < 1) && (f.name.untouched || f.name.touched)"
+                    class="text-red-500">* Name is required</p>
+                <p *ngIf="f.name.value && f.name.value.length > 25 && (f.name.untouched || f.name.touched)"
+                    class="text-red-500">* Name can't be more than 25 characters</p>
+            </div>
+
+            <!-- Price -->
+            <div>
+                <label for="price" class="block mb-2 text-sm font-medium text-gray-700">Price:</label>
+                <input type="number" id="price" formControlName="price"
+                    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-red-200"
+                    [(ngModel)]="product.price">
+                <p *ngIf="f.price.errors?.['min']" class="text-red-500">* Price must be greater than 0</p>
+            </div>
+        </div>
+
+        <!-- Columna 2 -->
+        <div class="lg:flex lg:flex-col lg:space-y-4">
+            <!-- Description -->
+            <div>
+                <label for="description" class="block mb-2 text-sm font-medium text-gray-700">Description:</label>
+                <textarea id="description" formControlName="description"
+                    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-red-200 resize-none"
+                    [(ngModel)]="product.description"></textarea>
+                <p *ngIf="f.description.invalid && f.description.untouched" class="text-red-500">
+                    * Description is required</p>
+            </div>
+
+            <!-- Category -->
+            <div>
+                <label for="category" class="block mb-2 text-sm font-medium text-gray-700">Category:</label>
+                <select id="category" formControlName="category"
+                    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-red-200"
+                    [(ngModel)]="product.category">
+                    <option value="">Select a category</option>
+                    <option value="category1">AWS</option>
+                    <option value="category2">Netifly</option>
+                    <option value="category3">Strapi</option>
+                </select>
+                <p *ngIf="f.category.invalid && f.category.untouched" class="text-red-500">* Category
+                    is
+                    required</p>
+            </div>
+
+            <!-- Sale -->
+            <div>
+                <label for="sale" class="block mb-2 text-sm font-medium text-gray-700">Sale:</label>
+                <input type="checkbox" id="sale" formControlName="sale"
+                    class="mr-2 leading-tight focus:outline-none accent-red-400" [(ngModel)]="product.sale">
+            </div>
+
+            <!-- Image -->
+            <div>
+                <label for="image" class="block mb-2 text-sm font-medium text-gray-700">Image:</label>
+                <input type="text" id="image" formControlName="image"
+                    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-red-200"
+                    [(ngModel)]="product.image">
+            </div>
+        </div>
+        <!-- Submit Button -->
+        <div class="col-span-2">
+            <button type="submit"
+                class="w-full px-4 py-2 text-white rounded-md hover:bg-green-500 focus:outline-none focus:bg-blue-600 drop-shadow-lg"
+                [ngClass]="{'bg-green-400': form.valid, 'bg-gray-400': form.invalid}"
+                [disabled]="form.invalid">Submit</button>
+        </div>
+
+    </form>
+</div>
